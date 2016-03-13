@@ -85,7 +85,8 @@ export default Ember.Controller.extend({
         addComment( comments ){
             let newComment = prompt("Please Enter Your Comment!");
             if( newComment ){
-                comments.addObject( Object.create({"message": newComment}) );
+                let dateStr = new Date();
+                comments.addObject( Object.create({"message": newComment, "time": dateStr.toDateString()}) );
             }
         },
         deleteComment( comments, comment ){

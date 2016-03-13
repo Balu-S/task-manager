@@ -39,6 +39,7 @@
                 <div class="each-comment">
                     <span class="desc-message">{{comment.message}}</span>
                     <span class="close" {{action 'deleteComment' activeCard.comments comment}}>x</span>
+                    <span class="time">{{comment.time}}</span>
                 </div>
             {{/each}}
         </div>

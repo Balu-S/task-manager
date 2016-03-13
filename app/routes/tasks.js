@@ -7,30 +7,30 @@ export default Ember.Route.extend({
         return [
             Ember.Object.create({"name": "Fruits", "cards": [
                     Ember.Object.create({ "name": "APPLE", "description": "The apple tree is a deciduous tree in the rose family best known for its sweet, pomaceous fruit, the apple", "comments": [
-                            Ember.Object.create({"message": "Yeah, It's really very sweet!"})
+                            Ember.Object.create({"message": "Yeah, It's really very sweet!", "time": "Sun May 22 2015"})
                         ]
                     }),
                     Ember.Object.create({ "name": "POMEGRANATE", "description": "People use pomegranate for flu, stomatitis, gum, diabetes, etc.", "comments": [
-                            Ember.Object.create({ "message": "Yeah, Good for blood!" })
+                            Ember.Object.create({ "message": "Yeah, Good for blood!", "time": "Wed Jun 12 2015" })
                         ]
                     })
                 ]
             }),
             Ember.Object.create({ "name": "Cars", "cards": [
                     Ember.Object.create({ "name": "JAGUAR", "description": "Jaguar Cars is a brand of Jaguar Land Rover, a British multinational car manufacturer headquartered in Whitley, Coventry, England, owned by the Indian company Tata Motors since 2008.", "comments": [
-                            Ember.Object.create({ "message": "Sample Comment For Jaguar!" })
+                            Ember.Object.create({ "message": "Sample Comment For Jaguar!", "time": "Thu Jul 02 2015"  })
                         ]
                     }),
                     Ember.Object.create({ "name": "AUDI", "description": "Audi AG is a German automobile manufacturer that designs, engineers, produces, markets and distributes luxury vehicles. Audi oversees worldwide operations from its headquarters in Ingolstadt, Bavaria, Germany.", "comments": [
-                            Ember.Object.create({ "message": "Sample Comment For Audi!" })
+                            Ember.Object.create({ "message": "Sample Comment For Audi!", "time": "Mon Nov 05 2015" })
                         ]
                     }),
                     Ember.Object.create({ "name": "CHEVROLET", "description": "Chevrolet, colloquially referred to as Chevy and formally the Chevrolet Division of General Motors Company, is an American automobile division of the American manufacturer General Motors.", "comments": [
-                            Ember.Object.create({ "message": "Sample Comment For Chevrolet!" })
+                            Ember.Object.create({ "message": "Sample Comment For Chevrolet!", "time": "Tue Nov 16 2015"  })
                         ]
                     }),
                     Ember.Object.create({ "name": "FIAT", "description": "FIAT is an Italian automaker which produces Fiat branded cars, and is part of Fiat Chrysler Automobiles through its subsidiary FCA Italy S.p.A.., the largest automobile manufacturer in Italy.", "comments": [
-                            Ember.Object.create({ "message": "Sample Comment For Fiat!" })
+                            Ember.Object.create({ "message": "Sample Comment For Fiat!", "time": "Sat Nov 27 2015"  })
                         ]
                     })
                 ]
