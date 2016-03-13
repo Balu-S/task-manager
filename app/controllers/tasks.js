@@ -5,6 +5,9 @@ const { Object } = Ember;
 export default Ember.Controller.extend({
     backup: "",
     backupOldDesc: "",
+    isShowComments: false,
+    activeCard: null,
+    togglerLabel: 'Hide Comments',
     actions: {
         addList( model ){
             let listName = prompt("Please Enter List name");
@@ -48,6 +51,27 @@ export default Ember.Controller.extend({
         editDesc( card ){
             this.set( "backupOldDesc", card.get("description") );
             card.set("isEditDesc", true);
+        },
+        stateChange( cards, selectedCard ){
+            cards.setEach("isActive", false);
+            selectedCard.set("isActive", true);
+            this.set("activeCard", selectedCard);
+            this.set("isShowComments", true);
+        },
+        toggleComments(){
+            let self = this;
+            Ember.$(".comments-container").animate({ 'width': 'toggle'}, 50, function(){
+                $(".container-comments").toggleClass("hide");
+            });
+        },
+        deleteComment( comments, comment ){
+            comments.removeObject( comment );
+        },
+        addComment( comments ){
+            let newComment = prompt("Please Enter Your Comment!");
+            if( newComment ){
+                comments.addObject( Object.create({"message": newComment}) );
+            }
         }
     }
 });

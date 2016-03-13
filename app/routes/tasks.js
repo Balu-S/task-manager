@@ -5,48 +5,32 @@ const { $ } = Ember;
 export default Ember.Route.extend({
     model: function(){
         return [
-            Ember.Object.create({
-                "name": "List 1",
-                "cards": [
-                    Ember.Object.create({
-                        "name": "Card 1",
-                        "description": "Description 1",
-                        "comments": [
-                            {
-                                "message": "comment 1"
-                            }
+            Ember.Object.create({"name": "Fruits", "cards": [
+                    Ember.Object.create({ "name": "APPLE", "description": "The apple tree is a deciduous tree in the rose family best known for its sweet, pomaceous fruit, the apple", "comments": [
+                            Ember.Object.create({"message": "Yeah, It's really very sweet!"})
                         ]
                     }),
-                    Ember.Object.create({
-                        "name": "Card 2",
-                        "description": "Description 2",
-                        "comments": [
-                            {
-                                "message": "comment 1"
-                            }
+                    Ember.Object.create({ "name": "POMEGRANATE", "description": "People use pomegranate for flu, stomatitis, gum, diabetes, etc.", "comments": [
+                            Ember.Object.create({ "message": "Yeah, Good for blood!" })
                         ]
                     })
                 ]
             }),
-            Ember.Object.create({
-                "name": "List 2",
-                "cards": [
-                    Ember.Object.create({
-                        "name": "List Card 1",
-                        "description": "Description 1",
-                        "comments": [
-                            {
-                                "message": "comment 1"
-                            }
+            Ember.Object.create({ "name": "Cars", "cards": [
+                    Ember.Object.create({ "name": "JAGUAR", "description": "Jaguar Cars is a brand of Jaguar Land Rover, a British multinational car manufacturer headquartered in Whitley, Coventry, England, owned by the Indian company Tata Motors since 2008.", "comments": [
+                            Ember.Object.create({ "message": "Sample Comment For Jaguar!" })
                         ]
                     }),
-                    Ember.Object.create({
-                        "name": "List Card 2",
-                        "description": "Description 2",
-                        "comments": [
-                            {
-                                "message": "comment 1"
-                            }
+                    Ember.Object.create({ "name": "AUDI", "description": "Audi AG is a German automobile manufacturer that designs, engineers, produces, markets and distributes luxury vehicles. Audi oversees worldwide operations from its headquarters in Ingolstadt, Bavaria, Germany.", "comments": [
+                            Ember.Object.create({ "message": "Sample Comment For Audi!" })
+                        ]
+                    }),
+                    Ember.Object.create({ "name": "CHEVROLET", "description": "Chevrolet, colloquially referred to as Chevy and formally the Chevrolet Division of General Motors Company, is an American automobile division of the American manufacturer General Motors.", "comments": [
+                            Ember.Object.create({ "message": "Sample Comment For Chevrolet!" })
+                        ]
+                    }),
+                    Ember.Object.create({ "name": "FIAT", "description": "FIAT is an Italian automaker which produces Fiat branded cars, and is part of Fiat Chrysler Automobiles through its subsidiary FCA Italy S.p.A.., the largest automobile manufacturer in Italy.", "comments": [
+                            Ember.Object.create({ "message": "Sample Comment For Fiat!" })
                         ]
                     })
                 ]
@@ -55,13 +39,29 @@ export default Ember.Route.extend({
     },
     actions: {
         didTransition() {
+            let self = this;
             Ember.run.later(function(){
-                $(".board").delegate("a", "click", function( ){
+
+                Ember.$(".card-container").sortable();
+                Ember.$(".list-container").sortable({"axis": "y"});
+
+                $(".board").delegate(".list", "click", function(){
+
+                    /* >>>>>>>> Remove Active State Of Previous List. <<<<<<<< */
                     $(".active").removeClass("active");
+
+                    /* >>>>>>>> Add Active State Of Selected List. <<<<<<<< */
                     $(this).addClass("active");
+
+                    /* >>>>>>>> Initialising sortable widget For Newly Created List. <<<<<<<< */
+                    if( !$(this).next().find(".card-container").hasClass("ui-sortable") ){
+                        Ember.$(".card-container").sortable();
+                    }
+
+                    /* >>>>>>>> Hide Comments View While Switching Between Lists. <<<<<<<< */
+                    self.set("controller.isShowComments", false);
                 });
             }, 10);
         }
     }
-
 });

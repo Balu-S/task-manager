@@ -6,51 +6,39 @@
     <div class="list-container">
         {{#each model as |list index|}}
             {{#unless index}}
-                <a href="javascript:;" class="anchor active">
-                    <div class="list"> {{list.name}} </div>
-                </a>
-            {{else}}
-                <a href="javascript:;" class="anchor">
-                    <div class="list"> {{list.name}} </div>
-                </a>
-            {{/unless}}
-            <div class="cards-container">
-                <span class="button" {{action "addCard" list.cards}}>New Card</span>
-                <div class="card-container">
-                    {{#each list.cards as |card|}}
-                        <div class="card" tabindex="1">
-                            <div class="card-heading">
-                                {{#if card.isRename}}
-                                    {{input type="text"
-                                            value=card.name
-                                            class="rename-input"
-                                            focusOut=(action 'saveName' card)
-                                            insert-newline=(action 'saveName' card)
-                                            escape-press=(action 'revertName' card)
-                                            autofocus=true
-                                        }}
-                                {{else}}
-                                    <span class="card-name" {{action "enableRename" card}}> {{card.name}} </span>
-                                {{/if}}
-                                <span class="close" {{action "deleteCard" list.cards card}}>x</span>
-                            </div>
-                            <div class="card-description">
-                                {{#if card.isEditDesc}}
-                                    {{input type="text"
-                                            autofocus=true
-                                            value=card.description
-                                            focusOut=(action 'saveDesc' card)
-                                            insert-newline=(action 'saveDesc' card)
-                                            escape-press=(action 'revertDesc' card)
-                                        }}
-                                {{else}}
-                                    <span class="card-name" {{action "editDesc" card}}> {{card.description}} </span>
-                                {{/if}}
-                            </div>
-                        </div>
-                    {{/each}}
+                <div class="list active">
+                    {{list.name}}
+                    {{partial 'card' list}}
                 </div>
-            </div>
+            {{else}}
+                <div class="list">
+                    {{list.name}}
+                    {{partial 'card' list}}
+                </div>
+            {{/unless}}
         {{/each}}
     </div>
 </div>
+{{#if isShowComments}}
+    <div class="comments">
+        <div class="container-comments hide" {{action 'toggleComments'}}>
+            <div class="arrow"></div>
+            <div class="comment-card">
+                <div class="face front">Show Comments</div>
+                <div class="face back">Hide Comments</div>
+            </div>
+        </div>
+        <div class="comments-container">
+            <div>
+                <h4 class="comments-title">Comments</h4>
+                <button class="add-comment-button" {{action 'addComment' activeCard.comments}}> Add Comment</button>
+            </div>
+            {{#each activeCard.comments as |comment|}}
+                <div class="each-comment">
+                    <span class="desc-message">{{comment.message}}</span>
+                    <span class="close" {{action 'deleteComment' activeCard.comments comment}}>x</span>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+{{/if}}
