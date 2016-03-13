@@ -1,27 +1,29 @@
 <div class="lists">
-    <div class="lists-header">
-        Task Lists
-    </div>
-    <div class="add-list" {{action "addList" model}}>Add New</div>
+    <div class="lists-header"> Task Lists </div>
+    <div class="add-list" {{action "addList" model}}> Add New </div>
     <div class="list-container">
         {{#each model as |list index|}}
-            {{#unless index}}
-                <div class="list active">
-                    {{list.name}}
-                    {{partial 'card' list}}
-                </div>
-            {{else}}
-                <div class="list">
-                    {{list.name}}
-                    {{partial 'card' list}}
-                </div>
-            {{/unless}}
+            <div class="list {{unless index 'active'}}">
+                {{#if list.isRename}}
+                    {{input type="text"
+                            value=list.name
+                            class="rename-input"
+                            focusOut=(action 'saveListName' list)
+                            insert-newline=(action 'saveListName' list)
+                            escape-press=(action 'revertListName' list)
+                            autofocus=true}}
+                {{else}}
+                    <span {{action 'enableListRename' list on="doubleClick"}}> {{list.name}} </span>
+                {{/if}}
+                <span class="close" {{action 'deleteList' model list}}>x</span>
+                {{partial 'card' list}}
+            </div>
         {{/each}}
     </div>
 </div>
 {{#if isShowComments}}
     <div class="comments">
-        <div class="container-comments hide" {{action 'toggleComments'}}>
+        <div class="container-comments hide" {{action 'showHideComments'}}>
             <div class="arrow"></div>
             <div class="comment-card">
                 <div class="face front">Show Comments</div>

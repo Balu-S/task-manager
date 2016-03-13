@@ -3,54 +3,72 @@ import Ember from 'ember';
 const { Object } = Ember;
 
 export default Ember.Controller.extend({
-    backup: "",
-    backupOldDesc: "",
+    oldCardName: "",
+    oldCardDesc: "",
+    oldListName: "",
     isShowComments: false,
     activeCard: null,
-    togglerLabel: 'Hide Comments',
     actions: {
         addList( model ){
-            let listName = prompt("Please Enter List name");
+            let listName = prompt("Give a name for the list!");
             if( listName ){
                 model.addObject( Object.create({ "name": listName, "cards": [] }));
             }
         },
+        deleteList( model, list ){
+            model.removeObject( list );
+        },
         addCard( cards ){
-            let cardName = prompt("Please Enter Card name");
+            let cardName = prompt("Give a name for the card!");
             if( cardName ){
                 cards.addObject( Object.create({ "name": cardName, "description": "Click to add description!", "comments": [] }));
             }
         },
+        deleteCard( cardsList, selectedCard ){
+            cardsList.removeObject( selectedCard );
+        },
+        enableRename( card ){
+            this.set( "oldCardName", card.get("name") );
+            card.set("isRename", true);
+        },
         saveName( card ){
             if( !card.get("name") ){
-                card.set("name", this.get( "backupOldName" ));
+                card.set("name", this.get( "oldCardName" ));
             }
             card.set("isRename", false);
         },
         revertName( card ){
-            card.set("name", this.get( "backupOldName" ));
+            card.set("name", this.get( "oldCardName" ));
             card.set("isRename", false);
         },
-        enableRename( card ){
-            this.set( "backupOldName", card.get("name") );
-            card.set("isRename", true);
+        enableListRename( list ){
+            this.set( "oldListName", list.get("name") );
+            list.set("isRename", true);
         },
-        deleteCard( cardsList, selectedCard ){
-            cardsList.removeObject( selectedCard );
+        saveListName( list ){
+            if( !list.get("name") ){
+                list.set("name", this.get( "oldListName" ));
+            }
+            list.set("isRename", false);
+        },
+
+        revertListName( list ){
+            list.set("name", this.get( "oldListName" ));
+            list.set("isRename", false);
+        },
+        editDesc( card ){
+            this.set( "oldCardDesc", card.get("description") );
+            card.set("isEditDesc", true);
         },
         saveDesc( card ){
             if( !card.get("description") ){
-                card.set("description", this.get( "backupOldDesc" ));
+                card.set("description", this.get( "oldCardDesc" ));
             }
             card.set("isEditDesc", false);
         },
         revertDesc( card ){
-            card.set("description", this.get( "backupOldDesc" ));
+            card.set("description", this.get( "oldCardDesc" ));
             card.set("isEditDesc", false);
-        },
-        editDesc( card ){
-            this.set( "backupOldDesc", card.get("description") );
-            card.set("isEditDesc", true);
         },
         stateChange( cards, selectedCard ){
             cards.setEach("isActive", false);
@@ -58,20 +76,20 @@ export default Ember.Controller.extend({
             this.set("activeCard", selectedCard);
             this.set("isShowComments", true);
         },
-        toggleComments(){
+        showHideComments(){
             let self = this;
             Ember.$(".comments-container").animate({ 'width': 'toggle'}, 50, function(){
                 $(".container-comments").toggleClass("hide");
             });
-        },
-        deleteComment( comments, comment ){
-            comments.removeObject( comment );
         },
         addComment( comments ){
             let newComment = prompt("Please Enter Your Comment!");
             if( newComment ){
                 comments.addObject( Object.create({"message": newComment}) );
             }
+        },
+        deleteComment( comments, comment ){
+            comments.removeObject( comment );
         }
     }
 });

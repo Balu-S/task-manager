@@ -15,7 +15,7 @@
                     {{else}}
                         <span class="card-name" {{action "enableRename" card on='doubleClick'}}> {{card.name}} </span>
                     {{/if}}
-                    <span class="close" {{action "deleteCard" list.cards card}}>x</span>
+                    <span class="close" {{action "deleteCard" list.cards card}}> x </span>
                 </div>
                 <div class="card-description">
                     {{#if card.isEditDesc}}
